@@ -30,8 +30,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  huawei_map: ^6.9.0+300
-  huawei_location: ^6.11.0+301
+  # huawei_map: ^6.9.0+300
+  huawei_map: ^6.11.2+303
+  huawei_location: ^6.12.0+302
   huawei_push: ^6.11.0+300
   huawei_scan: ^2.10.0+301
   google_maps_flutter: ^2.2.8
