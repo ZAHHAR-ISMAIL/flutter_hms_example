@@ -35,6 +35,8 @@ dependencies:
   huawei_location: ^6.12.0+302
   huawei_push: ^6.11.0+300
   huawei_scan: ^2.10.0+301
+  huawei_analytics: ^6.12.0+301
+  agconnect_crash: ^1.6.0+300
   google_maps_flutter: ^2.2.8
   permission_handler: ^10.2.0
   flutter_hms_gms_availability:

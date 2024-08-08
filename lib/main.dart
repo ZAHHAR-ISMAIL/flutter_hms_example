@@ -1,6 +1,8 @@
+import 'package:agconnect_crash/agconnect_crash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:huawei_analytics/huawei_analytics.dart';
 import 'package:huawei_push/huawei_push.dart';
 import 'package:flutter_hms_example/ScanPage.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -94,12 +96,21 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    print("HMSMSGG START:: ");
+
+    // Init HMS Push
     initTokenStream();
     getToken();
     initMessageStream();
     initMessageStreamForBackground();
     initIntentStream();
+
+    // Init HMS Analytics
+    initHmsAnalytics();
+  }
+
+  Future<void> initHmsAnalytics() async {
+    final HMSAnalytics hmsAnalytics = await HMSAnalytics.getInstance();
+    await hmsAnalytics.enableLog();
   }
 
   Future<void> initTokenStream() async {
@@ -193,6 +204,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: const Text('Open Scan Page'),
                 onPressed: () {
                   Navigator.pushNamed(context, '/ScanPage');
+                },
+              ),
+              ElevatedButton(
+                child: const Text('Test Crash'),
+                onPressed: () {
+                  AGCCrash.instance.testIt();
                 },
               )
             ],
