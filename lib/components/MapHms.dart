@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:huawei_map/huawei_map.dart' as huawei;
+import 'package:huawei_map/huawei_map.dart';
 
 class MapHmsWidget extends StatefulWidget {
   const MapHmsWidget({super.key});
@@ -9,6 +9,8 @@ class MapHmsWidget extends StatefulWidget {
 }
 
 class _MapHmsWidgetState extends State<MapHmsWidget> {
+  late HuaweiMapController mapController;
+
   @override
   void initState() {
     _initHMSMap();
@@ -16,7 +18,29 @@ class _MapHmsWidgetState extends State<MapHmsWidget> {
   }
 
   void _initHMSMap() {
-    huawei.HuaweiMapInitializer.initializeMap();
+    HuaweiMapInitializer.initializeMap();
+  }
+
+  void _onMapCreated(HuaweiMapController controller) {
+    mapController = controller;
+  }
+
+  void animateMap() {
+    CameraUpdate cameraUpdate = CameraUpdate.newCameraPosition(
+        const CameraPosition(
+            bearing: 2.2, target: LatLng(1, 1), tilt: 13, zoom: 13));
+    mapController.animateCamera(cameraUpdate);
+  }
+
+  void _showToast(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('onCameraIdle'),
+        action: SnackBarAction(
+            label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
   }
 
   @override
@@ -27,6 +51,14 @@ class _MapHmsWidgetState extends State<MapHmsWidget> {
         title: const Text("Map"),
         actions: [
           IconButton(
+            icon: const Icon(Icons.add_to_drive),
+            tooltip: 'Animate Camera',
+            onPressed: () {
+              // handle the press
+              animateMap();
+            },
+          ),
+          IconButton(
             icon: const Icon(Icons.location_on),
             tooltip: 'Open Location',
             onPressed: () {
@@ -36,31 +68,23 @@ class _MapHmsWidgetState extends State<MapHmsWidget> {
           ),
         ],
       ),
-      body: const Stack(children: <Widget>[
-        huawei.HuaweiMap(
-          initialCameraPosition: huawei.CameraPosition(
-            target: huawei.LatLng(41.012959, 28.997438),
-            zoom: 10,
-          ),
-          mapType: huawei.MapType.normal,
-          // tiltGesturesEnabled: true,
-          buildingsEnabled: true,
-          compassEnabled: true,
-          zoomControlsEnabled: true,
-          rotateGesturesEnabled: true,
-          myLocationEnabled: true,
-        )
-
-        // HuaweiMap(
-        //   initialCameraPosition: CameraPosition(
-        //     target: LatLng(41.012959, 28.997438),
-        //     zoom: 12,
-        //   ),
-        //   mapType: MapType.normal,
-        //   tiltGesturesEnabled: true,
-        //   myLocationButtonEnabled: true,
-        //   myLocationEnabled: true,
-        // )
+      body: Stack(children: <Widget>[
+        HuaweiMap(
+            initialCameraPosition: const CameraPosition(
+              target: LatLng(41.012959, 28.997438),
+              zoom: 10,
+            ),
+            onMapCreated: _onMapCreated,
+            mapType: MapType.normal,
+            // tiltGesturesEnabled: true,
+            buildingsEnabled: true,
+            compassEnabled: true,
+            zoomControlsEnabled: true,
+            rotateGesturesEnabled: true,
+            myLocationEnabled: true,
+            onCameraIdle: () {
+              _showToast(context);
+            })
       ]),
     );
   }
