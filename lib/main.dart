@@ -6,6 +6,7 @@ import 'package:huawei_analytics/huawei_analytics.dart';
 import 'package:huawei_push/huawei_push.dart';
 import 'package:flutter_hms_example/ScanPage.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 import 'LocationPage.dart';
 import 'MapPage.dart';
@@ -16,6 +17,8 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
   // This widget is the root of your application.
   @override
