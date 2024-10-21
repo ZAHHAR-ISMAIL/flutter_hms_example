@@ -1,4 +1,4 @@
-import 'package:agconnect_crash/agconnect_crash.dart';
+//import 'package:agconnect_crash/agconnect_crash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -212,7 +212,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 child: const Text('Test Crash'),
                 onPressed: () {
-                  AGCCrash.instance.testIt();
+                  //AGCCrash.instance.testIt();
                 },
               )
             ],

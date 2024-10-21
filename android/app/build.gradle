@@ -27,8 +27,9 @@ if (flutterVersionName == null) {
 
 android {
     namespace = "com.example.flutter_hms_example"
-    compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    compileSdk = 34
+    ndkVersion = "26.1.10909125"
+    
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -44,6 +45,9 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
+        manifestPlaceholders += [
+                'appAuthRedirectScheme': '<your_custom_scheme>'
+        ]
     }
 
     buildTypes {

@@ -6,7 +6,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.5.0'
+        classpath 'com.android.tools.build:gradle:7.1.2'
         classpath 'com.huawei.agconnect:agcp:1.9.1.300'
     }
 }
@@ -20,51 +20,57 @@ allprojects {
 }
 
 rootProject.buildDir = "../build"
-//subprojects {
-//    project.buildDir = "${rootProject.buildDir}/${project.name}"
-//}
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
 //subprojects {
 //    project.evaluationDependsOn(":app")
 //}
-
-subprojects {
-    project.buildDir = "${rootProject.buildDir}/${project.name}"
-    afterEvaluate {
-        // check if android block is available
-
-        if (it.hasProperty('android')) {
-
-            if (it.android.namespace == null) {
-                def manifest = new XmlSlurper().parse(file(it.android.sourceSets.main.manifest.srcFile))
-                def packageName = manifest.@package.text()
-                println("Setting ${packageName} as android namespace")
-                android.namespace = packageName
-            }
-
-            def javaVersion = JavaVersion.VERSION_1_8
-            android {
-                def androidApiVersion = 33
-                compileSdkVersion androidApiVersion
-                defaultConfig {
-                    targetSdkVersion androidApiVersion
-                }
-                compileOptions {
-                    sourceCompatibility javaVersion
-                    targetCompatibility javaVersion
-                }
-                tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-                    kotlinOptions {
-                        jvmTarget = javaVersion.toString()
-                    }
-                }
-                println("Setting java version to ${javaVersion.toString()} which is $javaVersion")
-                println("Setting compileSdkVersion and targetSdkVersion to $androidApiVersion")
-            }
-        }
-
-    }
-
-}
+//
+//subprojects {
+//    project.buildDir = "${rootProject.buildDir}/${project.name}"
+//    afterEvaluate {
+//        // check if android block is available
+//
+//        if (it.hasProperty('android')) {
+//
+//            if (it.android.namespace == null) {
+//                def manifest = new XmlSlurper().parse(file(it.android.sourceSets.main.manifest.srcFile))
+//                def packageName = manifest.@package.text()
+//                println("Setting ${packageName} as android namespace")
+//                android.namespace = packageName
+//            }
+//
+//            def javaVersion = JavaVersion.VERSION_1_8
+//            android {
+//                def androidApiVersion = 34
+//                compileSdkVersion androidApiVersion
+//                defaultConfig {
+//                    targetSdkVersion androidApiVersion
+//                }
+//                compileOptions {
+//                    sourceCompatibility javaVersion
+//                    targetCompatibility javaVersion
+//                }
+//                tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+//                    kotlinOptions {
+//                        jvmTarget = javaVersion.toString()
+//                    }
+//                }
+//                tasks.withType(JavaCompile) {
+//                    options.compilerArgs.remove("-Werror")
+//                }
+//                tasks.withType(JavaCompile) {
+//                    options.compilerArgs << "-Xlint:-options"
+//                }
+//                println("Setting java version to ${javaVersion.toString()} which is $javaVersion")
+//                println("Setting compileSdkVersion and targetSdkVersion to $androidApiVersion")
+//            }
+//        }
+//
+//    }
+//
+//}
 subprojects {
     project.evaluationDependsOn(':app')
 }
@@ -72,3 +78,12 @@ subprojects {
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
+
+//tasks.withType(JavaCompile) {
+//    options.compilerArgs.remove("-Werror")
+//}
+//tasks.withType(JavaCompile) {
+//    options.compilerArgs << "-Xlint:-options"
+//}
+// gradle buld tools 7.1.2
+// kotlin verions : 1.8.0
