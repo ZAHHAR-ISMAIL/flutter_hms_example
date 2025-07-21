@@ -23,6 +23,7 @@ class _LocationPageState extends State<LocationPage> {
   @override
   void initState() {
     super.initState();
+    _locationService.initFusedLocationService();
     _locationSettingsRequest =
         LocationSettingsRequest(requests: <LocationRequest>[_locationRequest]);
     // _requestPermission();
@@ -39,7 +40,7 @@ class _LocationPageState extends State<LocationPage> {
       _setLongitude(location.longitude);
       LoadingIndicatorDialog().dismiss();
     } on PlatformException catch (e) {
-      debugPrint("HMSO::3x");
+      debugPrint("HMSLocation_Error : ${e.message}");
       LoadingIndicatorDialog().dismiss();
     }
   }

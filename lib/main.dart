@@ -1,6 +1,8 @@
+import 'package:agconnect_crash/agconnect_crash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:huawei_analytics/huawei_analytics.dart';
 import 'package:huawei_push/huawei_push.dart';
 import 'package:flutter_hms_example/ScanPage.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -16,6 +18,8 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
   // This widget is the root of your application.
   @override
@@ -96,7 +100,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    print("HMSMSGG START:: ");
+
+    // Init HMS Push
     initTokenStream();
     getToken();
     initMessageStream();
@@ -207,6 +212,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: const Text('Open Scan Page'),
                 onPressed: () async {
                   Navigator.pushNamed(context, '/ScanPage');
+                },
+              ),
+              ElevatedButton(
+                child: const Text('Test Crash'),
+                onPressed: () {
+                  AGCCrash.instance.testIt();
                 },
               )
             ],
