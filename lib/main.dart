@@ -6,7 +6,8 @@ import 'package:huawei_analytics/huawei_analytics.dart';
 import 'package:huawei_push/huawei_push.dart';
 import 'package:flutter_hms_example/ScanPage.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter_notification_channel/flutter_notification_channel.dart';
+import 'package:flutter_notification_channel/notification_importance.dart';
 
 import 'LocationPage.dart';
 import 'MapPage.dart';
@@ -106,14 +107,18 @@ class _MyHomePageState extends State<MyHomePage> {
     initMessageStream();
     initMessageStreamForBackground();
     initIntentStream();
-
-    // Init HMS Analytics
-    initHmsAnalytics();
+    initNotificationChannel();
   }
 
-  Future<void> initHmsAnalytics() async {
-    final HMSAnalytics hmsAnalytics = await HMSAnalytics.getInstance();
-    await hmsAnalytics.enableLog();
+  Future<void> initNotificationChannel() async {
+    debugPrint('start registering');
+    var result = await FlutterNotificationChannel().registerNotificationChannel(
+      description: 'My test channel',
+      id: 'myTestChannel',
+      importance: NotificationImportance.IMPORTANCE_HIGH,
+      name: 'Flutter channel test name',
+    );
+    debugPrint('Result: $result');
   }
 
   Future<void> initTokenStream() async {
@@ -205,7 +210,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ElevatedButton(
                 child: const Text('Open Scan Page'),
-                onPressed: () {
+                onPressed: () async {
                   Navigator.pushNamed(context, '/ScanPage');
                 },
               ),
