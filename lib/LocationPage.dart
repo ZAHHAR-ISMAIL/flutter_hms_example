@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hms_example/components/Loading.dart';
-import 'package:huawei_location/huawei_location.dart';
+// import 'package:huawei_location/huawei_location.dart';
 
 class LocationPage extends StatefulWidget {
   const LocationPage({super.key});
@@ -14,35 +14,35 @@ class _LocationPageState extends State<LocationPage> {
   double? _lat = 0.0;
   double? _long = 0.0;
 
-  final FusedLocationProviderClient _locationService =
-      FusedLocationProviderClient();
-  final LocationRequest _locationRequest = LocationRequest()..interval = 500;
+  // final FusedLocationProviderClient _locationService =
+  //     FusedLocationProviderClient();
+  // final LocationRequest _locationRequest = LocationRequest()..interval = 500;
 
-  late LocationSettingsRequest _locationSettingsRequest;
+  // late LocationSettingsRequest _locationSettingsRequest;
 
-  @override
-  void initState() {
-    super.initState();
-    _locationSettingsRequest =
-        LocationSettingsRequest(requests: <LocationRequest>[_locationRequest]);
-    // _requestPermission();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _locationSettingsRequest =
+  //       LocationSettingsRequest(requests: <LocationRequest>[_locationRequest]);
+  //   // _requestPermission();
+  // }
 
-  void _getLastLocation() async {
-    debugPrint("HMSO::03");
-    LoadingIndicatorDialog().show(context);
-    try {
-      final LocationSettingsStates states = await _locationService
-          .checkLocationSettings(_locationSettingsRequest);
-      final Location location = await _locationService.getLastLocation();
-      _setLatitude(location.latitude);
-      _setLongitude(location.longitude);
-      LoadingIndicatorDialog().dismiss();
-    } on PlatformException catch (e) {
-      debugPrint("HMSO::3x");
-      LoadingIndicatorDialog().dismiss();
-    }
-  }
+  // void _getLastLocation() async {
+  //   debugPrint("HMSO::03");
+  //   LoadingIndicatorDialog().show(context);
+  //   try {
+  //     final LocationSettingsStates states = await _locationService
+  //         .checkLocationSettings(_locationSettingsRequest);
+  //     final Location location = await _locationService.getLastLocation();
+  //     _setLatitude(location.latitude);
+  //     _setLongitude(location.longitude);
+  //     LoadingIndicatorDialog().dismiss();
+  //   } on PlatformException catch (e) {
+  //     debugPrint("HMSO::3x");
+  //     LoadingIndicatorDialog().dismiss();
+  //   }
+  // }
 
   void _setLatitude([double? n = 0.0]) {
     setState(() {
@@ -83,7 +83,7 @@ class _LocationPageState extends State<LocationPage> {
             ElevatedButton(
               child: const Text('get Location'),
               onPressed: () {
-                _getLastLocation();
+                // _getLastLocation();
               },
             ),
           ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:huawei_map/huawei_map.dart' as huawei;
+// import 'package:huawei_map/huawei_map.dart' as huawei;
 
 class MapHmsWidget extends StatefulWidget {
   const MapHmsWidget({super.key});
@@ -11,13 +11,13 @@ class MapHmsWidget extends StatefulWidget {
 class _MapHmsWidgetState extends State<MapHmsWidget> {
   @override
   void initState() {
-    _initHMSMap();
+    // _initHMSMap();
     super.initState();
   }
 
-  void _initHMSMap() {
-    huawei.HuaweiMapInitializer.initializeMap();
-  }
+  // void _initHMSMap() {
+  //   huawei.HuaweiMapInitializer.initializeMap();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -37,19 +37,19 @@ class _MapHmsWidgetState extends State<MapHmsWidget> {
         ],
       ),
       body: const Stack(children: <Widget>[
-        huawei.HuaweiMap(
-          initialCameraPosition: huawei.CameraPosition(
-            target: huawei.LatLng(41.012959, 28.997438),
-            zoom: 10,
-          ),
-          mapType: huawei.MapType.normal,
-          // tiltGesturesEnabled: true,
-          buildingsEnabled: true,
-          compassEnabled: true,
-          zoomControlsEnabled: true,
-          rotateGesturesEnabled: true,
-          myLocationEnabled: true,
-        )
+        // huawei.HuaweiMap(
+        //   initialCameraPosition: huawei.CameraPosition(
+        //     target: huawei.LatLng(41.012959, 28.997438),
+        //     zoom: 10,
+        //   ),
+        //   mapType: huawei.MapType.normal,
+        //   // tiltGesturesEnabled: true,
+        //   buildingsEnabled: true,
+        //   compassEnabled: true,
+        //   zoomControlsEnabled: true,
+        //   rotateGesturesEnabled: true,
+        //   myLocationEnabled: true,
+        // )
 
         // HuaweiMap(
         //   initialCameraPosition: CameraPosition(
