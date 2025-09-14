@@ -50,17 +50,6 @@ class _MapHmsWidgetState extends State<MapHmsWidget> {
           rotateGesturesEnabled: true,
           myLocationEnabled: true,
         )
-
-        // HuaweiMap(
-        //   initialCameraPosition: CameraPosition(
-        //     target: LatLng(41.012959, 28.997438),
-        //     zoom: 12,
-        //   ),
-        //   mapType: MapType.normal,
-        //   tiltGesturesEnabled: true,
-        //   myLocationButtonEnabled: true,
-        //   myLocationEnabled: true,
-        // )
       ]),
     );
   }

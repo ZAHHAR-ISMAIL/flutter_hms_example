@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hms_example/components/MapGms.dart';
 import 'package:flutter_hms_example/components/MapHms.dart';
-import 'package:flutter_hms_gms_availability/flutter_hms_gms_availability.dart';
+// import 'package:flutter_hms_gms_availability/flutter_hms_gms_availability.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -11,22 +11,22 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
-  bool gms = false, hms = false;
+  bool gms = false, hms = true;
 
   @override
   void initState() {
     super.initState();
 
-    FlutterHmsGmsAvailability.isGmsAvailable.then((t) {
-      setState(() {
-        gms = t;
-      });
-    });
-    FlutterHmsGmsAvailability.isHmsAvailable.then((t) {
-      setState(() {
-        hms = t;
-      });
-    });
+    // FlutterHmsGmsAvailability.isGmsAvailable.then((t) {
+    //   setState(() {
+    //     gms = t;
+    //   });
+    // });
+    // FlutterHmsGmsAvailability.isHmsAvailable.then((t) {
+    //   setState(() {
+    //     hms = t;
+    //   });
+    // });
   }
 
   @override
