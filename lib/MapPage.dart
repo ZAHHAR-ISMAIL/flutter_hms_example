@@ -11,7 +11,7 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
-  bool gms = false, hms = false;
+  bool gms = false, hms = true;
 
   @override
   void initState() {

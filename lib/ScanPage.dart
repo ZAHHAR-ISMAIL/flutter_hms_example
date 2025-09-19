@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:huawei_scan/huawei_scan.dart';
+// import 'package:huawei_scan/huawei_scan.dart';
 
 class ScanPage extends StatefulWidget {
   const ScanPage({super.key});
@@ -27,23 +27,23 @@ class _ScanPageState extends State<ScanPage> {
     ].request();
 
     if (await Permission.camera.status.isGranted) {
-      try {
-        DefaultViewRequest request = DefaultViewRequest(
-          scanType: HmsScanTypes.AllScanType,
-          viewType: 1,
-          errorCheck: true,
-        );
-        ScanResponse response = await HmsScanUtils.startDefaultView(request);
-        setState(() {
-          resultScan = response.originalValue;
-          codeFormatScan = response.scanType;
-          resultTypeScan = response.scanTypeForm;
-        });
-      } on PlatformException catch (err) {
-        if (err.code == HmsScanErrors.scanUtilNoCameraPermission.errorCode) {
-          debugPrint(HmsScanErrors.scanUtilNoCameraPermission.errorMessage);
-        }
-      }
+      // try {
+      //   DefaultViewRequest request = DefaultViewRequest(
+      //     scanType: HmsScanTypes.AllScanType,
+      //     viewType: 1,
+      //     errorCheck: true,
+      //   );
+      //   ScanResponse response = await HmsScanUtils.startDefaultView(request);
+      //   setState(() {
+      //     resultScan = response.originalValue;
+      //     codeFormatScan = response.scanType;
+      //     resultTypeScan = response.scanTypeForm;
+      //   });
+      // } on PlatformException catch (err) {
+      //   if (err.code == HmsScanErrors.scanUtilNoCameraPermission.errorCode) {
+      //     debugPrint(HmsScanErrors.scanUtilNoCameraPermission.errorMessage);
+      //   }
+      // }
     } else {
       openAppSettings();
     }
