@@ -3,7 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 // import 'package:huawei_push/huawei_push.dart';
 import 'package:flutter_hms_example/ScanPage.dart';
-import 'package:permission_handler/permission_handler.dart';
+// import 'package:permission_handler/permission_handler.dart';
 
 import 'LocationPage.dart';
 import 'MapPage.dart';
@@ -153,21 +153,21 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    void requestPerms(type) async {
-      Map<Permission, PermissionStatus> statuses = await [
-        Permission.locationWhenInUse,
-        Permission.locationAlways,
-      ].request();
+    // void requestPerms(type) async {
+    //   Map<Permission, PermissionStatus> statuses = await [
+    //     Permission.locationWhenInUse,
+    //     Permission.locationAlways,
+    //   ].request();
 
-      if (await Permission.location.status.isGranted) {
-        if (type == "Map")
-          Navigator.pushNamed(context, '/MapPage');
-        else
-          Navigator.pushNamed(context, '/LocationPage');
-      } else {
-        openAppSettings();
-      }
-    }
+    //   if (await Permission.location.status.isGranted) {
+    //     if (type == "Map")
+    //       Navigator.pushNamed(context, '/MapPage');
+    //     else
+    //       Navigator.pushNamed(context, '/LocationPage');
+    //   } else {
+    //     openAppSettings();
+    //   }
+    // }
 
     return Scaffold(
         appBar: AppBar(
@@ -180,13 +180,13 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 child: const Text('Open Map Page'),
                 onPressed: () {
-                  requestPerms("Map");
+                  // requestPerms("Map");
                 },
               ),
               ElevatedButton(
                 child: const Text('Open Location Page'),
                 onPressed: () {
-                  requestPerms("Location");
+                  // requestPerms("Location");
                 },
               ),
               ElevatedButton(

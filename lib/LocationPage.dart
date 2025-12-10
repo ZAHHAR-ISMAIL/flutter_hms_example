@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hms_example/components/Loading.dart';
+import 'package:flutter_hms_example/location_helper/location_helper_GMS.dart';
 import 'package:huawei_location/huawei_location.dart';
 
 class LocationPage extends StatefulWidget {
@@ -11,6 +12,8 @@ class LocationPage extends StatefulWidget {
 }
 
 class _LocationPageState extends State<LocationPage> {
+  final locationHelper = LocationHelper();
+
   double? _lat = 0.0;
   double? _long = 0.0;
 
@@ -23,9 +26,74 @@ class _LocationPageState extends State<LocationPage> {
   @override
   void initState() {
     super.initState();
+    _locationService.initFusedLocationService();
     _locationSettingsRequest =
         LocationSettingsRequest(requests: <LocationRequest>[_locationRequest]);
     // _requestPermission();
+    loadUserLocation(context);
+  }
+
+  Future<void> loadUserLocation(BuildContext context) async {
+    final res = await locationHelper.getForMap();
+
+    if (res.status == LocationStatus.ok) {
+      final p = res.position!;
+      _setLatitude(p.latitude);
+      _setLongitude(p.longitude);
+      // update marker + move camera
+      return;
+    }
+
+    if (res.status == LocationStatus.serviceDisabled) {
+      await showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: const Text('Enable Location'),
+          content:
+              const Text('Please turn on Location services to use the map.'),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Cancel')),
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context);
+                await locationHelper.openLocationSettings();
+              },
+              child: const Text('Open Settings'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    if (res.status == LocationStatus.permissionDenied ||
+        res.status == LocationStatus.permissionDeniedForever) {
+      await showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: const Text('Location Permission'),
+          content: const Text(
+              'Allow location permission to show your position on the map.'),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Cancel')),
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context);
+                await locationHelper.openAppSettings();
+              },
+              child: const Text('Open App Settings'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    // timeout/error -> show toast/snackbar
   }
 
   void _getLastLocation() async {
@@ -39,7 +107,7 @@ class _LocationPageState extends State<LocationPage> {
       _setLongitude(location.longitude);
       LoadingIndicatorDialog().dismiss();
     } on PlatformException catch (e) {
-      debugPrint("HMSO::3x");
+      debugPrint("HMSLocation_Error : ${e.message}");
       LoadingIndicatorDialog().dismiss();
     }
   }

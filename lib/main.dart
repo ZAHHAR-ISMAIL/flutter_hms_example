@@ -14,8 +14,13 @@
     limitations under the License.
 */
 
+import 'dart:developer';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hms_example/LocationPage.dart';
 import 'package:huawei_map/huawei_map.dart';
+// import 'package:huawei_hmsavailability/huawei_hmsavailability.dart';
 
 import 'components/circle_demo.dart.dart';
 import 'components/ground_overlay_demo.dart';
@@ -27,6 +32,8 @@ import 'components/heat_map_demo.dart';
 import 'components/lite_mode_demo.dart';
 import 'custom_widgets/custom_card.dart';
 import 'huawei_map_demo.dart';
+
+import '';
 
 void main() {
   runApp(
@@ -49,12 +56,45 @@ class _HomePageState extends State<HomePage> {
   double distance = 0.0;
   LatLng? convertedLatLng;
   bool hmsLoggerStatus = true;
+  // late HmsApiAvailability hmsApiAvailability;
+  String _result = 'HMS availability result code: unknown';
+  final List<String> _eventList = <String>[
+    'Availability result events will be listed'
+  ];
 
   @override
   void initState() {
     HuaweiMapInitializer.initializeMap();
     super.initState();
+    // hmsApiAvailability = HmsApiAvailability();
+    // _getAvailability();
   }
+
+  // void _getAvailability() async {
+  //   try {
+  //     final int resultCode = await hmsApiAvailability.isHMSAvailable();
+  //     setState(() {
+  //       _result = 'Availability result code: $resultCode';
+  //     });
+
+  //     if (resultCode != 0) {
+  //       hmsApiAvailability.setResultListener = (AvailabilityEvent? event) {
+  //         if (event != null) {
+  //           setState(() {
+  //             _eventList.add('Availability event: ${describeEnum(event)}');
+  //           });
+  //         }
+  //       };
+  //       hmsApiAvailability.getErrorDialog(resultCode, 1000, true);
+  //     }
+  //   } catch (e) {
+  //     setState(() {
+  //       _eventList.add('$e');
+  //     });
+  //   }
+
+  //   print("HMSSS $_result");
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -253,8 +293,12 @@ class _HomePageState extends State<HomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute<dynamic>(
-                            builder: (BuildContext context) => LiteModeDemo(),
+                            builder: (BuildContext context) =>
+                                const LocationPage(),
                           ),
+                          // MaterialPageRoute<dynamic>(
+                          //   builder: (BuildContext context) => LiteModeDemo(),
+                          // ),
                         );
                       },
                     ),
