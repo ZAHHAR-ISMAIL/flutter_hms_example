@@ -1,26 +1,6 @@
-/*
-    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
-
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
-
-import 'dart:developer';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hms_example/LocationPage.dart';
 import 'package:huawei_map/huawei_map.dart';
-// import 'package:huawei_hmsavailability/huawei_hmsavailability.dart';
 
 import 'components/circle_demo.dart.dart';
 import 'components/ground_overlay_demo.dart';
@@ -29,11 +9,9 @@ import 'components/polygon_demo.dart';
 import 'components/polyline_demo.dart';
 import 'components/tile_overlay_demo.dart';
 import 'components/heat_map_demo.dart';
-import 'components/lite_mode_demo.dart';
+// import 'components/lite_mode_demo.dart';
 import 'custom_widgets/custom_card.dart';
 import 'huawei_map_demo.dart';
-
-import '';
 
 void main() {
   runApp(
@@ -56,102 +34,18 @@ class _HomePageState extends State<HomePage> {
   double distance = 0.0;
   LatLng? convertedLatLng;
   bool hmsLoggerStatus = true;
-  // late HmsApiAvailability hmsApiAvailability;
-  String _result = 'HMS availability result code: unknown';
-  final List<String> _eventList = <String>[
-    'Availability result events will be listed'
-  ];
 
   @override
   void initState() {
     HuaweiMapInitializer.initializeMap();
     super.initState();
-    // hmsApiAvailability = HmsApiAvailability();
-    // _getAvailability();
   }
-
-  // void _getAvailability() async {
-  //   try {
-  //     final int resultCode = await hmsApiAvailability.isHMSAvailable();
-  //     setState(() {
-  //       _result = 'Availability result code: $resultCode';
-  //     });
-
-  //     if (resultCode != 0) {
-  //       hmsApiAvailability.setResultListener = (AvailabilityEvent? event) {
-  //         if (event != null) {
-  //           setState(() {
-  //             _eventList.add('Availability event: ${describeEnum(event)}');
-  //           });
-  //         }
-  //       };
-  //       hmsApiAvailability.getErrorDialog(resultCode, 1000, true);
-  //     }
-  //   } catch (e) {
-  //     setState(() {
-  //       _eventList.add('$e');
-  //     });
-  //   }
-
-  //   print("HMSSS $_result");
-  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverAppBar(
-            pinned: true,
-            floating: false,
-            expandedHeight: 220.0,
-            backgroundColor: Colors.transparent,
-            shadowColor: Colors.transparent,
-            flexibleSpace: Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                    'assets/banner2.png',
-                  ),
-                  fit: BoxFit.cover,
-                ),
-                borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(50),
-                ),
-              ),
-              child: LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-                  top = constraints.biggest.height;
-                  return FlexibleSpaceBar(
-                    centerTitle: true,
-                    background: AnimatedOpacity(
-                      opacity: top >= 220 ? 1.0 : 0.2,
-                      duration: const Duration(milliseconds: 300),
-                      child: const Center(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 25.0),
-                          child: Text(
-                            'Huawei Map Kit, provides standard maps as well as UI elements such as markers, shapes, and layers for you to customize maps that better meet service scenarios.',
-                            style: TextStyle(color: Colors.white),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    ),
-                    title: const Text(
-                      'Huawei Map Flutter Demo',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0,
-                      ),
-                    ),
-                    collapseMode: CollapseMode.pin,
-                  );
-                },
-              ),
-            ),
-          ),
           SliverList(
             delegate: SliverChildListDelegate(
               <Widget>[
