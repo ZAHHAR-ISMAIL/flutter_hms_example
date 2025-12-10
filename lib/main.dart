@@ -285,7 +285,7 @@ class _HomePageState extends State<HomePage> {
                       },
                     ),
                     CustomCard(
-                      text: 'Lite Mode',
+                      text: 'Location Page',
                       imagePath: 'assets/liteMode.jpg',
                       textColor: Colors.white,
                       subText: 'Create static map images easily',

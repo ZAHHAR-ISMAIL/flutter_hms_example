@@ -64,47 +64,62 @@ class HmsLocationHelper {
     if (!_looksValid(loc)) return null;
 
     final now = DateTime.now().millisecondsSinceEpoch;
-    final ageMs = now -
-        loc.time; // todo: fix The argument type 'int?' can't be assigned to the parameter type 'num'. dartargument_type_not_assignable
+    final locTime = loc.time;
+    if (locTime == null) return null;
+    final ageMs = now - locTime;
     if (ageMs < 0 || ageMs > maxAge.inMilliseconds) return null;
 
     return loc;
   }
 
   /// One-shot update (NOT continuous): request numUpdates=1 then stop.
-  Future<Location> getCurrentOnce(
-      {Duration timeout = const Duration(seconds: 8)}) async {
-    await ensureReady();
+  Future<Location> getCurrentOnce({
+    Duration timeout = const Duration(seconds: 14),
+  }) async {
+    await init();
+
+    final stream = _client.onLocationData;
+    if (stream == null) {
+      throw const HmsLocException(
+        'HMS onLocationData is null. Make sure service is initialized.',
+      );
+    }
 
     final req = LocationRequest()
-      ..priority = LocationRequest.PRIORITY_HIGH_ACCURACY
       ..interval = 500
-      ..fastestInterval = 250
-      ..numUpdates = 1; // one shot :contentReference[oaicite:5]{index=5}
+      ..priority = LocationRequest.PRIORITY_HIGH_ACCURACY;
+    // Don’t rely on numUpdates=1 alone — we remove updates ourselves after first hit.
 
-    int? requestCode;
+    final completer = Completer<Location>();
     StreamSubscription<Location>? sub;
+    int? requestCode;
 
     try {
-      requestCode = await _client
-          .requestLocationUpdates(req); // :contentReference[oaicite:6]{index=6}
-      final c = Completer<Location>();
-
-      sub = _client.onLocationData.listen((loc) {
-        if (!c.isCompleted && _looksValid(loc)) c.complete(loc);
+      // 1) Listen first (same as Huawei sample)
+      sub = stream.listen((loc) {
+        if (!completer.isCompleted && _looksValid(loc)) {
+          completer.complete(loc);
+        }
       });
 
-      return await c.future.timeout(timeout);
+      // 2) Request updates
+      requestCode = await _client.requestLocationUpdates(req);
+      if (requestCode == null) {
+        throw const HmsLocException('requestLocationUpdates returned null.');
+      }
+
+      // 3) Wait for first location
+      return await completer.future.timeout(timeout);
     } on TimeoutException {
-      throw const HmsLocException('Timeout getting location.');
+      throw const HmsLocException('Timeout getting HMS location.');
     } on PlatformException catch (e) {
       throw HmsLocException(e.message ?? e.toString());
     } finally {
+      // 4) Always cleanup
       await sub?.cancel();
       if (requestCode != null) {
         try {
-          await _client.removeLocationUpdates(
-              requestCode); // :contentReference[oaicite:7]{index=7}
+          await _client.removeLocationUpdates(requestCode);
         } catch (_) {}
       }
     }
