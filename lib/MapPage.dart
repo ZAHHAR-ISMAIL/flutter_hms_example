@@ -31,10 +31,10 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (hms == true && gms == false) {
-      return const MapHmsWidget();
-    } else {
-      return const MapGmsWidget();
-    }
+    // if (hms == true && gms == false) {
+    return const MapHmsWidget();
+    // } else {
+    //   return const MapGmsWidget();
+    // }
   }
 }
