@@ -78,14 +78,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
-  flutter_notification_channel:
-    dependency: "direct main"
-    description:
-      name: flutter_notification_channel
-      sha256: "1e97c537d2121d5b4a5a4e9db53b7c1428eb95b63f1df1dee48bfe1300070638"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.1"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -176,14 +168,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.12.0+300"
-  huawei_push:
-    dependency: "direct main"
-    description:
-      name: huawei_push
-      sha256: "63388ea0af5564453da9ac3abf354744173b598fa3a23f09f1c5724e8fa930c9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.14.0+300"
   js:
     dependency: transitive
     description:

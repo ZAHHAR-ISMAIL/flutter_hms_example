@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:huawei_push/huawei_push.dart';
+// import 'package:huawei_push/huawei_push.dart';
 import 'package:flutter_hms_example/ScanPage.dart';
 // import 'package:permission_handler/permission_handler.dart';
-import 'package:flutter_notification_channel/flutter_notification_channel.dart';
-import 'package:flutter_notification_channel/notification_importance.dart';
+// import 'package:flutter_notification_channel/flutter_notification_channel.dart';
+// import 'package:flutter_notification_channel/notification_importance.dart';
 
 import 'LocationPage.dart';
 import 'MapPage.dart';
@@ -53,112 +53,110 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _token = event;
     });
-    print("HMSMSGG TokenEvent: " + _token);
+    print("HMSMSGG TokenEvent: $_token");
   }
 
   void _onTokenError(Object error) {
     //PlatformException e = error;
-    print("HMSMSGG TokenErrorEvent: " + error.toString());
+    print("HMSMSGG TokenErrorEvent: $error");
   }
 
-  void _onMessageReceived(RemoteMessage remoteMessage) {
-    // Called when a data message is received
-    String? data = remoteMessage.data;
-    print("HMSMSGG DATA RECIEVED:: " + data.toString());
-  }
+  // void _onMessageReceived(RemoteMessage remoteMessage) {
+  //   // Called when a data message is received
+  //   String? data = remoteMessage.data;
+  //   print("HMSMSGG DATA RECIEVED:: $data");
+  // }
 
   void _onMessageReceiveError(Object error) {
     // Called when an error occurs while receiving the data message
-    print("HMSMSGG DATA ERRO:: " + error.toString());
+    print("HMSMSGG DATA ERRO:: $error");
   }
 
   void _onNewIntent(String intentString) {
     // For navigating to the custom intent page (deep link)
     // The custom intent that sent from the push kit console is:
     // app://open.my.app/CustomIntentPage
-    if (intentString != null) {
-      print('HMSMSGG CustomIntentEvent: ' + intentString);
-      // List parsedString = intentString.split("://open.my.app/");
-      // if (parsedString[1] == "CustomIntentPage") {
-      //   // Schedule the navigation after the widget is builded.
-      //   SchedulerBinding.instance.addPostFrameCallback((_) {
-      //     Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomIntentPage()));
-      //   });
-      // }
-    }
+    print('HMSMSGG CustomIntentEvent: ' + intentString);
+    // List parsedString = intentString.split("://open.my.app/");
+    // if (parsedString[1] == "CustomIntentPage") {
+    //   // Schedule the navigation after the widget is builded.
+    //   SchedulerBinding.instance.addPostFrameCallback((_) {
+    //     Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomIntentPage()));
+    //   });
+    // }
   }
 
   void _onIntentError(Object err) {
     PlatformException? e = err as PlatformException?;
-    print("Error on intent stream: " + e.toString());
+    print("Error on intent stream: $e");
   }
 
   @override
   void initState() {
     super.initState();
     print("HMSMSGG START:: ");
-    initTokenStream();
-    getToken();
-    initMessageStream();
-    initMessageStreamForBackground();
-    initIntentStream();
-    initNotificationChannel();
+    // initTokenStream();
+    // getToken();
+    // initMessageStream();
+    // initMessageStreamForBackground();
+    // initIntentStream();
+    // initNotificationChannel();
   }
 
   Future<void> initNotificationChannel() async {
     debugPrint('start registering');
-    var result = await FlutterNotificationChannel().registerNotificationChannel(
-      description: 'My test channel',
-      id: 'myTestChannel',
-      importance: NotificationImportance.IMPORTANCE_HIGH,
-      name: 'Flutter channel test name',
-    );
-    debugPrint('Result: $result');
+    // var result = await FlutterNotificationChannel().registerNotificationChannel(
+    //   description: 'My test channel',
+    //   id: 'myTestChannel',
+    //   importance: NotificationImportance.IMPORTANCE_HIGH,
+    //   name: 'Flutter channel test name',
+    // );
+    // debugPrint('Result: $result');
   }
 
-  Future<void> initTokenStream() async {
-    print("HMSMSGG START TWO:: ");
+  // Future<void> initTokenStream() async {
+  //   print("HMSMSGG START TWO:: ");
 
-    if (!mounted) return;
-    Push.getTokenStream.listen(_onTokenEvent, onError: _onTokenError);
-    print("HMSMSGG END:: ");
-  }
+  //   if (!mounted) return;
+  //   Push.getTokenStream.listen(_onTokenEvent, onError: _onTokenError);
+  //   print("HMSMSGG END:: ");
+  // }
 
-  Future<void> initMessageStream() async {
-    if (!mounted) return;
-    Push.onMessageReceivedStream
-        .listen(_onMessageReceived, onError: _onMessageReceiveError);
-  }
+  // Future<void> initMessageStream() async {
+  //   if (!mounted) return;
+  //   Push.onMessageReceivedStream
+  //       .listen(_onMessageReceived, onError: _onMessageReceiveError);
+  // }
 
-  Future<void> initMessageStreamForBackground() async {
-    print("HMSMSGG BACKGROUND START");
-    bool backgroundMessageHandler =
-        await Push.registerBackgroundMessageHandler(backgroundMessageCallback);
-    print("HMSMSGG BACKGROUND OK: $backgroundMessageHandler");
-  }
+  // Future<void> initMessageStreamForBackground() async {
+  //   print("HMSMSGG BACKGROUND START");
+  //   bool backgroundMessageHandler =
+  //       await Push.registerBackgroundMessageHandler(backgroundMessageCallback);
+  //   print("HMSMSGG BACKGROUND OK: $backgroundMessageHandler");
+  // }
 
-  static void backgroundMessageCallback(RemoteMessage remoteMessage) async {
-    String? data = remoteMessage.data;
-    print("HMSMSGG BACKGROUND: $data");
+  // static void backgroundMessageCallback(RemoteMessage remoteMessage) async {
+  //   String? data = remoteMessage.data;
+  //   print("HMSMSGG BACKGROUND: $data");
 
-    Push.localNotification({
-      HMSLocalNotificationAttr.TITLE: '[Headless] DataMessage Received',
-      HMSLocalNotificationAttr.MESSAGE: data
-    });
-  }
+  //   Push.localNotification({
+  //     HMSLocalNotificationAttr.TITLE: '[Headless] DataMessage Received',
+  //     HMSLocalNotificationAttr.MESSAGE: data
+  //   });
+  // }
 
-  Future<void> initIntentStream() async {
-    if (!mounted) return;
-    Push.getIntentStream.listen(_onNewIntent, onError: _onIntentError);
-    String? intent = await Push.getInitialIntent();
-    _onNewIntent(intent!);
-  }
+  // Future<void> initIntentStream() async {
+  //   if (!mounted) return;
+  //   Push.getIntentStream.listen(_onNewIntent, onError: _onIntentError);
+  //   String? intent = await Push.getInitialIntent();
+  //   // _onNewIntent(intent);
+  // }
 
-  void getToken() async {
-    // Call this method to request for a token
-    print("___Request for a token !!!!!!!!!");
-    Push.getToken("");
-  }
+  // void getToken() async {
+  //   // Call this method to request for a token
+  //   print("___Request for a token !!!!!!!!!");
+  //   Push.getToken("");
+  // }
 
   // void subscribe() async {
   //   String topic = "testTopic";
