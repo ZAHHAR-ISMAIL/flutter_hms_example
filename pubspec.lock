@@ -164,10 +164,10 @@ packages:
     dependency: "direct main"
     description:
       name: huawei_map
-      sha256: "8aefa4138293348cb98920f8a126fc022a94173ef3785e8f2fbd0549e8012661"
+      sha256: "38675971ee0976d911a85c64a473d9b72b8e887188eac979ad1e0d9b984e3a5e"
       url: "https://pub.dev"
     source: hosted
-    version: "6.12.0+300"
+    version: "6.11.2+303"
   js:
     dependency: transitive
     description:

@@ -53,42 +53,44 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _token = event;
     });
-    print("HMSMSGG TokenEvent: $_token");
+    print("HMSMSGG TokenEvent: " + _token);
   }
 
   void _onTokenError(Object error) {
     //PlatformException e = error;
-    print("HMSMSGG TokenErrorEvent: $error");
+    print("HMSMSGG TokenErrorEvent: " + error.toString());
   }
 
   // void _onMessageReceived(RemoteMessage remoteMessage) {
   //   // Called when a data message is received
   //   String? data = remoteMessage.data;
-  //   print("HMSMSGG DATA RECIEVED:: $data");
+  //   print("HMSMSGG DATA RECIEVED:: " + data.toString());
   // }
 
   void _onMessageReceiveError(Object error) {
     // Called when an error occurs while receiving the data message
-    print("HMSMSGG DATA ERRO:: $error");
+    print("HMSMSGG DATA ERRO:: " + error.toString());
   }
 
   void _onNewIntent(String intentString) {
     // For navigating to the custom intent page (deep link)
     // The custom intent that sent from the push kit console is:
     // app://open.my.app/CustomIntentPage
-    print('HMSMSGG CustomIntentEvent: ' + intentString);
-    // List parsedString = intentString.split("://open.my.app/");
-    // if (parsedString[1] == "CustomIntentPage") {
-    //   // Schedule the navigation after the widget is builded.
-    //   SchedulerBinding.instance.addPostFrameCallback((_) {
-    //     Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomIntentPage()));
-    //   });
-    // }
+    if (intentString != null) {
+      print('HMSMSGG CustomIntentEvent: ' + intentString);
+      // List parsedString = intentString.split("://open.my.app/");
+      // if (parsedString[1] == "CustomIntentPage") {
+      //   // Schedule the navigation after the widget is builded.
+      //   SchedulerBinding.instance.addPostFrameCallback((_) {
+      //     Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomIntentPage()));
+      //   });
+      // }
+    }
   }
 
   void _onIntentError(Object err) {
     PlatformException? e = err as PlatformException?;
-    print("Error on intent stream: $e");
+    print("Error on intent stream: " + e.toString());
   }
 
   @override
@@ -103,16 +105,16 @@ class _MyHomePageState extends State<MyHomePage> {
     // initNotificationChannel();
   }
 
-  Future<void> initNotificationChannel() async {
-    debugPrint('start registering');
-    // var result = await FlutterNotificationChannel().registerNotificationChannel(
-    //   description: 'My test channel',
-    //   id: 'myTestChannel',
-    //   importance: NotificationImportance.IMPORTANCE_HIGH,
-    //   name: 'Flutter channel test name',
-    // );
-    // debugPrint('Result: $result');
-  }
+  // Future<void> initNotificationChannel() async {
+  //   debugPrint('start registering');
+  //   var result = await FlutterNotificationChannel().registerNotificationChannel(
+  //     description: 'My test channel',
+  //     id: 'myTestChannel',
+  //     importance: NotificationImportance.IMPORTANCE_HIGH,
+  //     name: 'Flutter channel test name',
+  //   );
+  //   debugPrint('Result: $result');
+  // }
 
   // Future<void> initTokenStream() async {
   //   print("HMSMSGG START TWO:: ");
@@ -149,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //   if (!mounted) return;
   //   Push.getIntentStream.listen(_onNewIntent, onError: _onIntentError);
   //   String? intent = await Push.getInitialIntent();
-  //   // _onNewIntent(intent);
+  //   _onNewIntent(intent!);
   // }
 
   // void getToken() async {
