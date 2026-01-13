@@ -32,11 +32,11 @@ dependencies:
     sdk: flutter
   huawei_map: ^6.9.0+300
   huawei_location: ^6.11.0+301
-  huawei_push: ^6.11.0+300
-  huawei_scan: ^2.10.0+301
+  # huawei_push: ^6.11.0+300
+  # huawei_scan: ^2.10.0+301
   google_maps_flutter: ^2.2.8
-  permission_handler: ^10.2.0
-  flutter_notification_channel: ^3.1.1
+  # permission_handler: ^10.2.0
+  # flutter_notification_channel: ^3.1.1
   # flutter_hms_gms_availability:
   #   path: D:\Dev\hms-plugins\flutter_hms_gms_availability
 
